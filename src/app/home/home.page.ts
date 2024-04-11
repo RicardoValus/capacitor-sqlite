@@ -8,27 +8,57 @@ import { SqliteService } from '../services/sqlite.service';
 })
 export class HomePage {
 
-  public language: string;
-  public languages: string[];
+  public item: string;
+  public items: string[];
 
   constructor(private sqlite: SqliteService) {
-    this.language = '';
-    this.languages = [];
+    this.item = '';
+    this.items = [];
   }
 
-  create(){
-
+  ionViewWillEnter() {
+    this.read();
   }
 
-  read(){
-    
+  create() {
+    this.sqlite.create(this.item.toUpperCase()).then(
+      (changes) => {
+        console.log("Criado: ", changes);
+        this.read();
+      }).catch(err => {
+        console.error("Erro ao criar: ", err);
+      })
   }
 
-  update(language: string){
-
+  read() {
+    this.sqlite.read().then(
+      (items: string[]) => {
+        this.items = items;
+        console.log("Lido: ", this.items);
+      }).catch(err => {
+        console.error("Erro ao ler: ", err);
+      })
   }
-  
-  delete(language: string){
 
+  update(item: string) {
+    this.sqlite.update(this.item.toUpperCase(), item).then(
+      (changes) => {
+        console.log("Atualizado: ", changes);
+        this.read();
+      }
+    ).catch(err => {
+      console.error("Erro ao atualizar: ", err);
+    })
+  }
+
+  delete(item: string) {
+    this.sqlite.delete(item).then(
+      (changes) => {
+        console.log("Apagado: ", changes);
+        this.read();
+      }
+    ).catch(err => {
+      console.error("Erro ao apagar: ", err);
+    })
   }
 }

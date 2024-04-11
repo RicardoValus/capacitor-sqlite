@@ -98,8 +98,8 @@ export class SqliteService {
     return this.dbName;
   }
 
-  async create(language: string) {
-    let sql = 'INSERT INTO languages VALUES(?)';
+  async create(item: string) {
+    let sql = 'INSERT INTO items VALUES(?)';
     const dbName = await this.getDbName();
     return CapacitorSQLite.executeSet({
       database: dbName,
@@ -107,7 +107,7 @@ export class SqliteService {
         {
           statement: sql,
           values: [
-            language
+            item
           ]
         }
       ]
@@ -120,29 +120,30 @@ export class SqliteService {
   }
 
   async read() {
-    let sql = 'SELECT * FROM languages';
+    let sql = 'SELECT * FROM items';
     const dbName = await this.getDbName();
     return CapacitorSQLite.query({
       database: dbName,
       statement: sql,
       values: []
     }).then((response: capSQLiteValues) => {
-      let languages: string[] = [];
+      let items: string[] = [];
 
       if (this.isIOS && response.values.length > 0) {
         response.values.shift();
       }
 
       for (let index = 0; index < response.values.length; index++) {
-        const language = response.values[index];
-        language.push(language.name);
+        const item = response.values[index];
+        items.push(item.name);
       }
-      return languages;
+
+      return items;
     }).catch(err => Promise.reject(err))
   }
 
-  async update(newLanguage: string, originalLanguage: string) {
-    let sql = 'UPDATE languages SET name=? WHERE name=?';
+  async update(newItem: string, originalItem: string) {
+    let sql = 'UPDATE items SET name=? WHERE name=?';
     const dbName = await this.getDbName();
     return CapacitorSQLite.executeSet({
       database: dbName,
@@ -150,8 +151,8 @@ export class SqliteService {
         {
           statement: sql,
           values: [
-            newLanguage,
-            originalLanguage
+            newItem,
+            originalItem
           ]
         }
       ]
@@ -163,8 +164,8 @@ export class SqliteService {
     }).catch(err => Promise.reject(err))
   }
 
-  async delete(language: string) {
-    let sql = 'DELETE FROM languages WHERE name=?';
+  async delete(item: string) {
+    let sql = 'DELETE FROM items WHERE name=?';
     const dbName = await this.getDbName();
     return CapacitorSQLite.executeSet({
       database: dbName,
@@ -172,7 +173,7 @@ export class SqliteService {
         {
           statement: sql,
           values: [
-            language
+            item
           ]
         }
       ]

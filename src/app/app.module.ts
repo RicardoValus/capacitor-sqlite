@@ -22,4 +22,3 @@ jeepSqlite(window)
   ]
 })
 export class AppModule { }
- 

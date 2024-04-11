@@ -1,35 +1,31 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      testando banco
+  <ion-toolbar color="primary">
+    <ion-title class="title">
+      SQLite
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-item>
-    <ion-input label="Linguagem de programação: "
-    [(ngModel)]="language" name="language">
+    <ion-input label="Adicione algo: " [(ngModel)]="item" name="item">
     </ion-input>
-    <ion-button (click)="create()">
-      <ion-icon name="add-outline"></ion-icon>
+    <ion-button (click)="create()" fill="outline" color="dark">
+      <ion-icon name="add-outline" slot="icon-only"></ion-icon>
     </ion-button>
   </ion-item>
 
-  <ion-list>
-    <ion-item-sliding *ngFor="let language of languages">
-      <ion-item>
-        <ion-label>
-          {{ language }}
-        </ion-label>
-      </ion-item>
-      <ion-item-option color="warning" (click)="update(language)">
-        <ion-icon name="pencil-outline" slot="icon-only"></ion-icon>
-      </ion-item-option>
-      <ion-item-option color="danger" (click)="delete(language)">
-        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
-      </ion-item-option>
-    </ion-item-sliding>
+  <ion-list class="items">
+    <ion-item *ngFor="let item of items">
+      <ion-label>
+        Item: {{ item }}
+      </ion-label>
+      <ion-button slot="end" fill="outline" (click)="update(item)" color="dark">
+        <ion-icon slot="icon-only" name="pencil-outline" color="dark"></ion-icon>
+      </ion-button>
+      <ion-button slot="end" fill="outline" (click)="delete(item)" color="danger">
+        <ion-icon slot="icon-only" name="trash-outline" color="danger"></ion-icon>
+      </ion-button>
+    </ion-item>
   </ion-list>
-
-</ion-content> 
+</ion-content>

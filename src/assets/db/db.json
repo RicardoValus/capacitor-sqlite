@@ -1,11 +1,11 @@
 {
-  "database": "languages.db",
+  "database": "items.db",
   "version": 1,
   "encrypted": false,
   "mode": "full",
   "tables": [
     {
-      "name": "languages",
+      "name": "items",
       "schema": [
         {
           "column": "name",
